@@ -61,7 +61,7 @@ let enhance = async () => {
         throw new Error("IPS is empty or invalid.");
     }
     let enhanceTag = "highlight";
-    let listOfCategoriesToSearch = ["grav-1"]; //what to look in extensions -made up code because there is none
+    let listOfCategoriesToSearch = [{"code":"grav-1","system":"http://gravitate-health.eu/codes"}]; //what to look in extensions -made up code because there is none
 
     // Highlight <QT prolongation risk> IF MedicationRequest.medication == [Citalopram] 
     // AND Observation.code == "K+" (loinc 2823-3) AND Observation.value < 3.5 mmol/L
@@ -154,7 +154,7 @@ let enhance = async () => {
                             (coding) => {
                                 console.log("Extension: " + element.extension[0].valueString + ":" + coding.code)
                                 // Check if the code is in the list of categories to search
-                                if (listOfCategoriesToSearch.includes(coding.code)) {
+                                    if (listOfCategoriesToSearch.some(item => item.code === coding.code && item.system === coding.system)) {
                                     // Check if the category is already in the list of categories
                                     categories.push(element.extension[0].valueString);
                                 }
